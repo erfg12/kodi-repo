@@ -104,8 +104,8 @@ elif mode[0] == 'pl_info':
 		vID = i['snippet']['resourceId']['videoId']
 		url = build_url({'mode': 'play_video', 'videoID': vID})
 		#print i['snippet']['title']
-		if i['snippet']['thumbnails']['default']['url'] is 'null':
-			thumb = 'https://yt3.ggpht.com/-l2pJL18VmwA/AAAAAAAAAAI/AAAAAAAAAAA/JTufNMLca4w/s512-c-k-no/photo.jpg'
+		if i['snippet']['title'] == 'Private video':
+			continue
 		else:
 			thumb = i['snippet']['thumbnails']['default']['url']
 		li = xbmcgui.ListItem(i['snippet']['title'], iconImage=thumb)
