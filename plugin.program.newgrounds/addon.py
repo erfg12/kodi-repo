@@ -10,6 +10,7 @@ import HTMLParser
 import xbmcaddon
 import os
 import webbrowser
+import os.path
 
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
@@ -429,6 +430,8 @@ elif mode[0] == 'video_info':
 
     for f in file:
         if not ".swf" in f:
+		    extension = os.path.splitext(f)[1]
+			f = f.replace(extension, '.' + xbmcplugin.getSetting(addon_handle,'vquality') + '.mp4' )
             xbmc.Player().play('http://uploads.ungrounded.net' + f.replace('\\', '')) #file 3 is always mobile compatible?
     
 elif mode[0] == 'audio_list':
