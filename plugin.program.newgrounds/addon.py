@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import urllib
 import urllib2,cookielib,re
 import StringIO
@@ -328,16 +328,17 @@ elif mode[0] == 'search_video':
     content = readURL('http://www.newgrounds.com/portal/search/movies/' + urllib.quote_plus(name) + '/' + args['page'][0])
     #xbmcgui.Dialog().ok('DEBUG', content)
 
-    grabContent = re.compile('<li class="movie">(.*?)<\/li>', re.DOTALL).findall(content)
+    grabContent = re.compile('<a href="\/portal\/view\/(.*?)<\/li>', re.DOTALL).findall(content)
     #xbmcgui.Dialog().ok('DEBUG', grabContent[0])
     nextPage = int(args['page'][0]) + 1
 
     for newContent in grabContent:
         #xbmcgui.Dialog().ok('DEBUG', newContent)
-        title = re.compile('alt="([^"]*)"').findall(newContent)
+        title = re.compile('<h4>([^"]*)<\/h4>').findall(newContent)
         thumb = re.compile('src="([^"]*)"').findall(newContent)
-        descncat = re.compile('<span>([^"]*)<\/span>').findall(newContent)
-        videoID = re.compile('<a href="\/portal\/view\/([^"]*)">').findall(newContent)
+        descncat = re.compile('<div class="detail-description">([^"]*)<\/div>').findall(newContent)
+        videoID = re.compile('([^"]*)">').findall(newContent)
+        #xbmcgui.Dialog().ok('DEBUG', videoID[0])
 
         for vID in videoID:
             url = build_url({'mode': 'video_info', 'videoID': vID})
@@ -372,15 +373,15 @@ elif mode[0] == 'search_art':
 
     for newContent in grabContent:
         #xbmcgui.Dialog().ok('DEBUG', newContent)
-        title = re.compile('alt="([^"]*) by ').findall(newContent)
+        title = re.compile('alt="([^"]*)"').findall(newContent)
         thumb = re.compile('src="([^"]*)"').findall(newContent)
-        rated = re.compile('class="([^"]*)"').findall(newContent)
-        artID = re.compile('([^"]*)" class="rated-([^"]*)').findall(newContent)
-        artist = re.compile('<strong><span></span>by (.*?)</strong>').findall(newContent)
+        rated = re.compile('<div class="rated-([^"]*) item-suitability">').findall(newContent)
+        artID = re.compile('([^"]*)" class="item-portalitem-art-small"').findall(newContent)
+        artist = re.compile('<div class="item-details">by (.*?)</div>').findall(newContent)
 
-        for aID,rated in artID:
+        for aID in artID:
             url = build_url({'mode': 'art_info', 'artID': aID})
-            li = xbmcgui.ListItem(HTMLParser.HTMLParser().unescape(title[0]) + ' by ' + artist[0] + " [" + rated.upper() + "]", iconImage=thumb[0])
+            li = xbmcgui.ListItem(HTMLParser.HTMLParser().unescape(title[0]) + ' by ' + artist[0] + " [" + rated[0].upper() + "]", iconImage=thumb[0])
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_art', 'page': nextPage, 'search_term': name})
@@ -399,15 +400,15 @@ elif mode[0] == 'art_list':
 
     for newContent in grabContent:
         #xbmcgui.Dialog().ok('DEBUG', newContent)
-        title = re.compile('alt="([^"]*) by ').findall(newContent)
+        title = re.compile('alt="([^"]*)"').findall(newContent)
         thumb = re.compile('src="([^"]*)"').findall(newContent)
-        rated = re.compile('class="([^"]*)"').findall(newContent)
-        artID = re.compile('([^"]*)" class="rated-([^"]*)').findall(newContent)
-        artist = re.compile('<strong><span></span>by (.*?)</strong>').findall(newContent)
+        rated = re.compile('<div class="rated-([^"]*) item-suitability">').findall(newContent)
+        artID = re.compile('([^"]*)" class="item-portalitem-art-small"').findall(newContent)
+        artist = re.compile('<div class="item-details">by (.*?)</div>').findall(newContent)
 
-        for aID,rated in artID:
+        for aID in artID:
             url = build_url({'mode': 'art_info', 'artID': aID})
-            li = xbmcgui.ListItem(HTMLParser.HTMLParser().unescape(title[0]) + ' by ' + artist[0] + " [" + rated.upper() + "]", iconImage=thumb[0])
+            li = xbmcgui.ListItem(HTMLParser.HTMLParser().unescape(title[0]) + ' by ' + artist[0] + " [" + rated[0].upper() + "]", iconImage=thumb[0])
             xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'art_list', 'page': nextPage})
@@ -418,6 +419,7 @@ elif mode[0] == 'art_list':
 
 elif mode[0] == 'art_info':
     content = readURL('http://www.newgrounds.com/art/view/' + args['artID'][0])
+    #xbmcgui.Dialog().ok('DEBUG', args['artID'][0])
     file = re.compile('src=\"http:\\/\\/art.ngfiles.com\\/images\\/(.*?)\\"').findall(content)
     xbmc.executebuiltin('ShowPicture(' + 'http://art.ngfiles.com/images/' + file[0] + ')') 
 
@@ -431,10 +433,10 @@ elif mode[0] == 'video_list':
 
     for newContent in grabContent:
         #xbmcgui.Dialog().ok('DEBUG', newContent)
-        title = re.compile('<strong>([^"]*)<\/strong>').findall(newContent)
+        title = re.compile('<span>([^"]*)<\/span>').findall(newContent)
         thumb = re.compile('src="([^"]*)"').findall(newContent)
-        descncat = re.compile('<span>([^"]*)<\/span>').findall(newContent)
-        videoID = re.compile('([^"]*)" class="rated-').findall(newContent)
+        descncat = re.compile('<div class="item-details">([^"]*)<\/div>').findall(newContent)
+        videoID = re.compile('([^"]*)" class="item-portalsubmission-small"').findall(newContent)
 
         for vID in videoID:
             url = build_url({'mode': 'video_info', 'videoID': vID})
