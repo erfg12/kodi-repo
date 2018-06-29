@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.newagetv" name="NewAgeTV" version="1.0.0" provider-name="New Age Soldier">
+    <requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.youtube" version="5.0.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">NewAgeTV</summary>
+		<description lang="en">Plugin to New Age TV</description>
+		<license>GNU General Public License, v2</license>
+		<language>English</language>
+		<email>jake@newagesoldier.com</email>
+	</extension>
+</addon>
