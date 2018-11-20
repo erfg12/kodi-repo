@@ -31,7 +31,7 @@ def build_url(query):
 mode = args.get('mode', None)
 
 if mode is None:
-	response = urllib.urlopen('http://newagetv.stream/rest.api.php').read()
+	response = urllib.urlopen('https://newagetv.stream/rest.api.php').read()
 	data = json.loads(response)
 	for i in data:
 		url = build_url({'mode': 'channel', 'chanID': i['id']})
@@ -42,7 +42,7 @@ if mode is None:
 	xbmcplugin.endOfDirectory(addon_handle)
 
 elif mode[0] == 'channel':
-	response = urllib.urlopen('http://newagetv.stream/rest.api.php?chan=1').read()
+	response = urllib.urlopen('https://newagetv.stream/rest.api.php?chan=1').read()
 	data = json.loads(response)
 	pl=xbmc.PlayList(1)
 	pl.clear()
