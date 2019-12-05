@@ -51,3 +51,43 @@ msgstr "720p"
 msgctxt "#1080p"
 msgid "1080p"
 msgstr "1080p"
+
+msgctxt "#30007"
+msgid "nextpage"
+msgstr "NEXT PAGE >"
+
+msgctxt "#30008"
+msgid "faudio"
+msgstr "Featured Audio"
+
+msgctxt "#30009"
+msgid "baudio"
+msgstr "Browse Audio Portal"
+
+msgctxt "#30010"
+msgid "saudio"
+msgstr "Search Audio Portal"
+
+msgctxt "#30011"
+msgid "fvideo"
+msgstr "Featured Videos"
+
+msgctxt "#30012"
+msgid "bvideo"
+msgstr "Browse Videos Portal"
+
+msgctxt "#30013"
+msgid "svideo"
+msgstr "Search Videos Portal"
+
+msgctxt "#30014"
+msgid "fart"
+msgstr "Featured Art"
+
+msgctxt "#30015"
+msgid "bart"
+msgstr "Browse Art Portal"
+
+msgctxt "#30016"
+msgid "sart"
+msgstr "Search Art Portal"
