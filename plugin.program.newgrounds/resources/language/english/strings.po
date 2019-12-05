@@ -53,41 +53,41 @@ msgid "1080p"
 msgstr "1080p"
 
 msgctxt "#30007"
-msgid "nextpage"
+msgid "NEXT PAGE >"
 msgstr "NEXT PAGE >"
 
 msgctxt "#30008"
-msgid "faudio"
+msgid "Featured Audio"
 msgstr "Featured Audio"
 
 msgctxt "#30009"
-msgid "baudio"
+msgid "Browse Audio Portal"
 msgstr "Browse Audio Portal"
 
 msgctxt "#30010"
-msgid "saudio"
+msgid "Search Audio Portal"
 msgstr "Search Audio Portal"
 
 msgctxt "#30011"
-msgid "fvideo"
+msgid "Featured Videos"
 msgstr "Featured Videos"
 
 msgctxt "#30012"
-msgid "bvideo"
+msgid "Browse Videos Portal"
 msgstr "Browse Videos Portal"
 
 msgctxt "#30013"
-msgid "svideo"
+msgid "Search Videos Portal"
 msgstr "Search Videos Portal"
 
 msgctxt "#30014"
-msgid "fart"
+msgid "Featured Art"
 msgstr "Featured Art"
 
 msgctxt "#30015"
-msgid "bart"
+msgid "Browse Art Portal"
 msgstr "Browse Art Portal"
 
 msgctxt "#30016"
-msgid "sart"
+msgid "Search Art Portal"
 msgstr "Search Art Portal"
