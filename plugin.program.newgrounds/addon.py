@@ -65,8 +65,9 @@ def searchContent(content, mode, cType):
     else: #initial search
         kb = xbmc.Keyboard('', 'search')
         kb.doModal()
-        if kb.isConfirmed():
-            search = kb.getText()
+        search = kb.getText() if kb.isConfirmed() else None
+        if (search == None or search == ''): 
+            return None
 
     nextPage = int(args['page'][0]) + 1
     url = "https://newgrounds.app/browse.cache.php?type=" + content + "&s=" + search + "&page=" + args['page'][0]
