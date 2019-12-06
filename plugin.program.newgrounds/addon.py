@@ -1,18 +1,11 @@
-import sys
-import urllib
-import urllib2,cookielib,re
+import urllib,urllib2,urlparse
 import StringIO
-import urlparse
 import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import HTMLParser
 import xbmcaddon
-import os
 import webbrowser
-import os.path
-import BeautifulSoup
 import json
 
 base_url = sys.argv[0]
@@ -24,15 +17,6 @@ __addon__        = xbmcaddon.Addon()
 __addonname__    = __addon__.getAddonInfo('id')
 __language__     = __addon__.getLocalizedString
 dataroot = xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ).decode('utf-8')
-cookie_file = os.path.join( dataroot,'cookies.lwp')
-
-if not os.path.exists(dataroot):
-    os.makedirs(dataroot)
-
-cookie_jar = cookielib.LWPCookieJar(cookie_file)
-
-if not os.path.isfile(cookie_file):
-    cookie_jar.save()
 
 def build_url(query):
     return base_url + '?' + urllib.urlencode(query)
@@ -119,39 +103,39 @@ artCats = {"all", "illustration", "fine-art", "3d-art", "pixel-art", "other"}
 if mode is None:
 
     url = build_url({'mode': 'featured_audio'})
-    li = xbmcgui.ListItem('[COLOR orange]' + str(__language__(30008)) + '[/COLOR]', iconImage='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30008) + '[/COLOR]', iconImage='DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'audio_catlist'})
-    li = xbmcgui.ListItem('[COLOR orange]' + str(__language__(30009)) + '[/COLOR]', iconImage='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30009) + '[/COLOR]', iconImage='DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_audio', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR orange]' + str(__language__(30010)) + '[/COLOR]', iconImage='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30010) + '[/COLOR]', iconImage='DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'featured_video'})
-    li = xbmcgui.ListItem('[COLOR blue]' + str(__language__(30011)) + '[/COLOR]', iconImage='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30011) + '[/COLOR]', iconImage='DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'video_catlist'})
-    li = xbmcgui.ListItem('[COLOR blue]' + str(__language__(30012)) + '[/COLOR]', iconImage='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30012) + '[/COLOR]', iconImage='DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_video', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR blue]' + str(__language__(30013)) + '[/COLOR]', iconImage='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30013) + '[/COLOR]', iconImage='DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'featured_art'})
-    li = xbmcgui.ListItem('[COLOR yellow]' + str(__language__(30014)) + '[/COLOR]', iconImage='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30014) + '[/COLOR]', iconImage='DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'art_catlist', 'page': 1})
-    li = xbmcgui.ListItem('[COLOR yellow]' + str(__language__(30015)) + '[/COLOR]', iconImage='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30015) + '[/COLOR]', iconImage='DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_art', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR yellow]' + str(__language__(30016)) + '[/COLOR]', iconImage='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30016) + '[/COLOR]', iconImage='DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(addon_handle)
