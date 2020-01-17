@@ -9,10 +9,10 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<summary lang="en">newgrounds</summary>
-		<description lang="en">Plugin to newgrounds.com content</description>
-		<license>GNU General Public License, v2</license>
-		<language>English</language>
+		<summary lang="en_GB">newgrounds</summary>
+		<description lang="en_GB">Plugin to newgrounds.com content</description>
+		<license>GPL-2.0-or-later</license>
+		<language>en</language>
 		<forum>https://discordapp.com/invite/ddhGacy</forum>
 		<source>https://github.com/erfg12/kodi-repo/tree/master/plugin.program.newgrounds</source>
 		<email>newgmobile@gmail.com</email>
@@ -21,4 +21,6 @@
 			<fanart>fanart.jpg</fanart>
 		</assets>
 	</extension>
+	<news>v1.0.5  (2019-10-15)
+- Changed from cURL to JSON API</news>
 </addon>
