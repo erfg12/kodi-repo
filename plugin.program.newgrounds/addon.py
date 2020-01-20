@@ -1,4 +1,4 @@
-import urllib,urllib2,urlparse
+import urllib,urlparse
 import StringIO
 import xbmc
 import xbmcgui
@@ -23,22 +23,15 @@ def build_url(query):
 
 mode = args.get('mode', None)
 
-hdr = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Connection': 'keep-alive'
-}
-
 def getFeatured(content, mode, cType):
     url = "https://newgrounds.app/featured.cache.php"
-    data = None
 
-    req = urllib2.Request(url, data, hdr)
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(url)
     r = json.loads(response.read())
     for fm in r[content]:
         url = build_url({'mode': mode, 'contentID': fm['content_url']})
-        li = xbmcgui.ListItem(fm['title'], setArt=fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
+        li = xbmcgui.ListItem(fm['title'])
+        li.setArt(fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
         li.setInfo(cType, {'title': fm['title']})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
@@ -55,38 +48,38 @@ def searchContent(content, mode, cType):
 
     nextPage = int(args['page'][0]) + 1
     url = "https://newgrounds.app/browse.cache.php?type=" + content + "&s=" + search + "&page=" + args['page'][0]
-    data = None
 
-    req = urllib2.Request(url, data, hdr)
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(url)
     r = json.loads(response.read())
     for fm in r['browse_content']:
         url = build_url({'mode': mode, 'contentID': fm['content_url']})
-        li = xbmcgui.ListItem(fm['title'], setArt=fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
+        li = xbmcgui.ListItem(fm['title'])
+        li.setArt(fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
         li.setInfo(cType, {'title': fm['title']})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': mode, 'page': nextPage, 'search_term': search})
-    li = xbmcgui.ListItem(__language__(30007), setArt='DefaultVideo.png')
+    li = xbmcgui.ListItem(__language__(30007))
+    li.setArt('DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
 def browseContent(content, mode, cType):
     nextPage = int(args['page'][0]) + 1
     url = "https://newgrounds.app/browse.cache.php?type=" + content + "&g=" + args['cat'][0] + "&page=" + args['page'][0]
-    data = None
 
-    req = urllib2.Request(url, data, hdr)
-    response = urllib2.urlopen(req)
+    response = urllib.request.urlopen(url)
     r = json.loads(response.read())
     for fm in r['browse_content']:
         url = build_url({'mode': mode, 'contentID': fm['content_url']})
-        li = xbmcgui.ListItem(fm['title'], setArt=fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
+        li = xbmcgui.ListItem(fm['title'])
+        li.setArt(fm['thumbnail_newgrounds_url'] + fm['thumbnail'])
         li.setInfo(cType, {'title': fm['title']})
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': mode, 'cat': args['cat'][0], 'page': nextPage})
-    li = xbmcgui.ListItem(__language__(30007), setArt='DefaultVideo.png')
+    li = xbmcgui.ListItem(__language__(30007))
+    li.setArt('DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
@@ -103,39 +96,48 @@ artCats = {"all", "illustration", "fine-art", "3d-art", "pixel-art", "other"}
 if mode is None:
 
     url = build_url({'mode': 'featured_audio'})
-    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30008) + '[/COLOR]', setArt='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30008) + '[/COLOR]')
+    li.setArt('DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'audio_catlist'})
-    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30009) + '[/COLOR]', setArt='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30009) + '[/COLOR]')
+    li.setArt('DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_audio', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30010) + '[/COLOR]', setArt='DefaultAudio.png')
+    li = xbmcgui.ListItem('[COLOR orange]' + __language__(30010) + '[/COLOR]')
+    li.setArt('DefaultAudio.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'featured_video'})
-    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30011) + '[/COLOR]', setArt='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30011) + '[/COLOR]')
+    li.setArt('DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'video_catlist'})
-    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30012) + '[/COLOR]', setArt='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30012) + '[/COLOR]')
+    li.setArt('DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_video', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30013) + '[/COLOR]', setArt='DefaultVideo.png')
+    li = xbmcgui.ListItem('[COLOR blue]' + __language__(30013) + '[/COLOR]')
+    li.setArt('DefaultVideo.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'featured_art'})
-    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30014) + '[/COLOR]', setArt='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30014) + '[/COLOR]')
+    li.setArt('DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'art_catlist', 'page': 1})
-    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30015) + '[/COLOR]', setArt='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30015) + '[/COLOR]')
+    li.setArt('DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     url = build_url({'mode': 'search_art', 'page': 1, 'search_term': ' '})
-    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30016) + '[/COLOR]', setArt='DefaultPicture.png')
+    li = xbmcgui.ListItem('[COLOR yellow]' + __language__(30016) + '[/COLOR]')
+    li.setArt('DefaultPicture.png')
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
 
     xbmcplugin.endOfDirectory(addon_handle)
@@ -143,21 +145,24 @@ if mode is None:
 elif mode[0] == 'audio_catlist':
     for cat in sorted(audioCats):
         url = build_url({'mode': 'audio_list', 'cat': cat, 'page': 1})
-        li = xbmcgui.ListItem(cat, setArt='DefaultAudio.png')
+        li = xbmcgui.ListItem(cat)
+        li.setArt('DefaultAudio.png')
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
 elif mode[0] == 'video_catlist':
     for cat in sorted(videoCats):
         url = build_url({'mode': 'video_list', 'cat': cat, 'page': 1})
-        li = xbmcgui.ListItem(cat, setArt='DefaultVideo.png')
+        li = xbmcgui.ListItem(cat)
+        li.setArt('DefaultVideo.png')
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
 elif mode[0] == 'art_catlist':
     for cat in sorted(artCats):
         url = build_url({'mode': 'art_list', 'cat': cat, 'page': 1})
-        li = xbmcgui.ListItem(cat, setArt='DefaultVideo.png')
+        li = xbmcgui.ListItem(cat)
+        li.setArt('DefaultVideo.png')
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_handle)
 
